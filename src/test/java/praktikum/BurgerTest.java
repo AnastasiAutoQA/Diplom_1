@@ -8,13 +8,13 @@ import static org.junit.Assert.*;
 @RunWith(MockitoJUnitRunner.class)
 public class BurgerTest {
     @Spy
-    Ingredient ingredient_cutlet = new Ingredient(IngredientType.FILLING, "cutlet", 100);
+    Ingredient ingredientCutlet = new Ingredient(IngredientType.FILLING, "cutlet", 100);
 
     @Spy
-    Ingredient ingredient_chili = new Ingredient(IngredientType.SAUCE, "chili sauce", 300);
+    Ingredient ingredientChili = new Ingredient(IngredientType.SAUCE, "chili sauce", 300);
 
     @Spy
-    Ingredient ingredient_sausage = new Ingredient(IngredientType.FILLING, "sausage", 300);
+    Ingredient ingredientSausage = new Ingredient(IngredientType.FILLING, "sausage", 300);
 
     @Spy
     private Bun bun = new Bun("white bun", 200);
@@ -30,33 +30,33 @@ public class BurgerTest {
 
     @Test
     public void testAddIngredient() {
-        burger.addIngredient(ingredient_cutlet);
+        burger.addIngredient(ingredientCutlet);
         assertEquals(burger.ingredients.size(), 1);
     }
 
     @Test
     public void testRemoveIngredient() {
-        burger.addIngredient(ingredient_chili);
+        burger.addIngredient(ingredientChili);
         burger.removeIngredient(0);
         assertEquals(burger.ingredients.size(), 0);
     }
 
     @Test
     public void testMoveIngredient() {
-        burger.addIngredient(ingredient_chili);
-        burger.addIngredient(ingredient_sausage);
-        burger.moveIngredient(burger.ingredients.indexOf(ingredient_chili), burger.ingredients.indexOf(ingredient_sausage));
-        assertEquals(1, burger.ingredients.indexOf(ingredient_chili));
-        assertEquals(0, burger.ingredients.indexOf(ingredient_sausage));
+        burger.addIngredient(ingredientChili);
+        burger.addIngredient(ingredientSausage);
+        burger.moveIngredient(burger.ingredients.indexOf(ingredientChili), burger.ingredients.indexOf(ingredientSausage));
+        assertEquals(1, burger.ingredients.indexOf(ingredientChili));
+        assertEquals(0, burger.ingredients.indexOf(ingredientSausage));
     }
 
     @Test
     public void testBurgerGetPrice() {
         burger.setBuns(bun);
-        burger.addIngredient(ingredient_cutlet);
+        burger.addIngredient(ingredientCutlet);
         assertEquals(500, burger.getPrice(), 0);
         Mockito.verify(bun, Mockito.times(1)).getPrice();
-        Mockito.verify(ingredient_cutlet, Mockito.times(1)).getPrice();
+        Mockito.verify(ingredientCutlet, Mockito.times(1)).getPrice();
     }
 
     @Test
@@ -67,11 +67,11 @@ public class BurgerTest {
                 "\r\n" +
                 "Price: 500,000000\r\n";
         burger.setBuns(bun);
-        burger.addIngredient(ingredient_cutlet);
+        burger.addIngredient(ingredientCutlet);
         assertEquals(expectedReceipt, burger.getReceipt());
         Mockito.verify(bun, Mockito.times(2)).getName();
-        Mockito.verify(ingredient_cutlet, Mockito.times(1)).getName();
-        Mockito.verify(ingredient_cutlet, Mockito.times(1)).getType();
+        Mockito.verify(ingredientCutlet, Mockito.times(1)).getName();
+        Mockito.verify(ingredientCutlet, Mockito.times(1)).getType();
         Mockito.verify(burger, Mockito.times(1)).getPrice();
     }
 }
